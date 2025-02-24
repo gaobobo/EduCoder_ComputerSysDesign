@@ -1,0 +1,11 @@
+lcd.c:20:7:LCD_Fill	3
+lcd.c:39:7:LCD_DrawPoint	1
+lcd.c:52:7:LCD_DrawLine	9
+lcd.c:108:7:LCD_DrawRectangle	1
+lcd.c:123:7:Draw_Circle	3
+lcd.c:156:7:LCD_ShowChar	12
+lcd.c:218:7:LCD_ShowString	2
+lcd.c:233:6:mypow	2
+lcd.c:251:7:LCD_ShowIntNum	5
+lcd.c:283:7:LCD_ShowFloatNum1	3
+lcd.c:310:7:LCD_ShowPicture	3

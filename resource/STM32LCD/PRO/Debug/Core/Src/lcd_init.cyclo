@@ -1,0 +1,7 @@
+lcd_init.c:11:7:LCD_GPIO_Init	1
+lcd_init.c:26:7:LCD_Writ_Bus	3
+lcd_init.c:52:7:LCD_WR_DATA8	1
+lcd_init.c:62:7:LCD_WR_DATA	1
+lcd_init.c:73:7:LCD_WR_REG	1
+lcd_init.c:86:7:LCD_Address_Set	1
+lcd_init.c:130:7:LCD_Init	1
