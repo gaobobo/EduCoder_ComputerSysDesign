@@ -25,10 +25,10 @@ Brach=${3:-main}
 
 case $DownloadSite in
     Gitee)
-        wget -O /tmp/${LevelCode}.sh ttps://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${branch}/scripts/${LevelCode}.sh
+        wget -O /tmp/${LevelCode}.sh https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Brach}/scripts/${LevelCode}.sh
         ;;
     Github)
-        wget -O /tmp/${LevelCode}.sh https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${branch}/scripts/${LevelCode}.sh
+        wget -O /tmp/${LevelCode}.sh https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Brach}/scripts/${LevelCode}.sh
         ;;
 esac
 
