@@ -25,12 +25,20 @@ Brach=${3:-main}
 
 case $DownloadSite in
     Gitee)
-        wget -O /tmp/${LevelCode}.sh https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Brach}/scripts/${LevelCode}.sh
+        wget -O /tmp/download.sh https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Brach}/scripts/download.sh
         ;;
     Github)
-        wget -O /tmp/${LevelCode}.sh https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Brach}/scripts/${LevelCode}.sh
+        wget -O /tmp/download.sh https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Brach}/scripts/download.sh
         ;;
 esac
+
+if [ $? -ne 0 ]; then
+    echo "Download download.sh failed. Is the network disconnected?"
+    echo "下载 download.sh 失败。是否网络不通？"
+    exit 1
+fi
+
+source /tmp/download.sh ${DownloadSite} ${Brach} scripts/${LevelCode}.sh
 
 if [ $? -ne 0 ]; then
     echo "Download ${LevelCode}.sh failed. Is the LevelCode correct?"
@@ -38,14 +46,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-case $DownloadSite in
-    Gitee)
-        source /tmp/${LevelCode}.sh Gitee
-        ;;
-    Github)
-        source /tmp/${LevelCode}.sh Github
-        ;;
-esac
+source /tmp/${LevelCode}.sh ${DownloadSite} ${Brach}
 
 if [ $? -eq 0 ]; then
     echo "脚本运行完成。可直接评测。"
