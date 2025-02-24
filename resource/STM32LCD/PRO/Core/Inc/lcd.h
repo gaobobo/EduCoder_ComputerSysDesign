@@ -5,6 +5,7 @@
  *      Author: happy
  */
 
+#include "lcd_init.h"
 #ifndef INC_LCD_H_
 #define INC_LCD_H_
 
