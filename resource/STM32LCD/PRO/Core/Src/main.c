@@ -75,7 +75,7 @@ int main(void)
   /* USER CODE BEGIN Init */
   LCD_Init();
   /* USER CODE END Init */
-  LCD_Fill(0, 0, LCD_W, WHITE);
+  LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
   /* Configure the system clock */
   SystemClock_Config();
 
