@@ -113,7 +113,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+    DHT11_ReadData(DHT11_BUF);
 
+    char str[20];
+    sprintf(str, "%d%%, %dC\r\n", DHT11_BUF[0], DHT11_BUF[1]);
+    HAL_UART_Transmit_IT(&huart1, (uint8_t *)str, strlen(str));
+
+    HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
