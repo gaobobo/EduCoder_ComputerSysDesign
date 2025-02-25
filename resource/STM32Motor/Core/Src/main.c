@@ -125,12 +125,9 @@ int main(void)
       // DC_MOTOR_GPIO_Port DC_MOTOR_Pin
       //////////////////////////////////////////////////////////////////// PS: The answer is as follows:
 
-
-    
-
-
-
-
+      HAL_GPIO_WritePin(DC_MOTOR_GPIO_Port, DC_MOTOR_Pin, GPIO_PIN_SET);
+      HAL_Delay(1000);
+      HAL_GPIO_WritePin(DC_MOTOR_GPIO_Port, DC_MOTOR_Pin, GPIO_PIN_RESET);
 
       ////////////////////////////////////////////////////////////////////// PS: End of question answer.
 
