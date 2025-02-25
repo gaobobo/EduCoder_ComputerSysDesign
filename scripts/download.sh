@@ -20,8 +20,8 @@ case $DownloadSite in
 esac
 
 if [ $? -ne 0 ]; then
-    echo "Download ${FileName}.sh failed. Is the network disconnected?"
-    echo "下载 ${FileName}.sh 失败。是否网络不通？"
+    echo "Download ${FileName} failed. Is the network disconnected?"
+    echo "下载 ${FileName} 失败。是否网络不通？"
     exit 1
 fi
 
