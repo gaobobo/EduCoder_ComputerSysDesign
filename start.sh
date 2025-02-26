@@ -14,7 +14,7 @@ Options:
 用法: start.sh <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
 选项:
         <Level>                              关卡代码。详见仓库的/scripts/目录。
-        -f|--force                           修改评测系统内核通关。
+        -f|--force                           如可用，修改评测系统内核通关。
         -m|--mirrior [Gitee|Github]          下载资源文件时使用的仓库镜像。 [默认: Gitee]
         -b|--brach [main|dev|<branch>]       下载资源文件时的分支。 [默认: main]
 
