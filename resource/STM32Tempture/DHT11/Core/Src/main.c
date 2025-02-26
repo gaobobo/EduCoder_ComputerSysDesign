@@ -31,7 +31,9 @@
 // #include "../../inode/wifi/wifi.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,7 +53,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint16_t LightThresholdVal = 2000;//光阈值，大于该值认为是夜间
+uint16_t VoiceThresholdVal = 800;//声音阈值，小于该值，认为有大声音
+uint8_t MovingObjectFg = 0;    //检测到移动物体标志
+uint8_t LoudVoiceFg = 0;//出现大声音标志
+uint8_t DayOrNightFg = 0;//白天晚上标志志，0为白天，1为晚上
+uint16_t PhotoSensorAdVal = 0;//光敏传感器AD值
+uint16_t VoiceSensorAdVal = 0;//声音传感器AD值
+uint8_t Timer1msFg = 0;    //定时器1ms标志
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,7 +71,106 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+/*采集光敏传感器和声音传感器的AD值*/
+void AnaSampleCalc(void)
+{
+    uint8_t i = 0;
+    int16_t adc_buf[3] = {0};
+    char str[40] = {0};
+    for(i=0;i<2;i++)
+    {
+        // HAL_ADC_Start(&hadc1);
+        HAL_ADC_Start(&hadc2);
+        // HAL_ADC_PollForConversion(&hadc1,0xffff);
+        HAL_ADC_PollForConversion(&hadc2,0xffff);
+        // if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_REG_EOC))
+        if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc2), HAL_ADC_STATE_REG_EOC))
+        {
+            // adc_buf[i] = HAL_ADC_GetValue(&hadc1);
+            adc_buf[i] = HAL_ADC_GetValue(&hadc2);
+        }
+    }
+    // HAL_ADC_Stop(&hadc1);
+    HAL_ADC_Stop(&hadc2);
+    PhotoSensorAdVal = adc_buf[0];
+    VoiceSensorAdVal = adc_buf[1];
+//    sprintf(str,"%d %d\n",adc_buf[0],adc_buf[1]);
+//    HAL_UART_Transmit(&huart1,str,strlen(str),0xffff);//打印AD值
+}
+/*根据光敏传感器的AD值与阈值比较，判断白天与夜间*/
+void DayOrNightJudge(void)
+{
+    static uint16_t cnt1 = 0;
+    static uint16_t cnt2 = 0;
+    if(PhotoSensorAdVal>LightThresholdVal)    //夜间
+    {
+        if(++cnt1>=5)
+        {
+            cnt1=5;
+            cnt2=0;
+            DayOrNightFg = 1;
+        }
+    }
+    else
+    {
+        if(++cnt2>=5)
+        {
+            cnt2=5;
+            cnt1 = 0;
+            DayOrNightFg = 0;
+        }
+    }
+}
+/*根据声音传感器的AD值与阈值比较，判断是否有大声音*/
+void LoudVoiceDetection(void)
+{
+    if(VoiceSensorAdVal<VoiceThresholdVal)    //有大声音
+    {
+            LoudVoiceFg = 1;
+    }
+    else
+    {
+            LoudVoiceFg = 0;
+    }
+}
+/*灯的控制流程*/
+void LampControl(void)
+{
+    static uint8_t step = 1;
+    static uint16_t time_cnt = 0;
+    switch(step)
+    {
+        case 1:
+            if(DayOrNightFg==1)//当前为夜间
+            {
+                if(LoudVoiceFg)//大声音标志
+                {
+                    step++;
+                }
+                else if(MovingObjectFg)//移动物体标志
+                {
+                    MovingObjectFg = 0;
+                    step++;
+                }
+            }
+            break;
+        case 2:
+            HAL_UART_Transmit(&huart1,"lamp On!\n",strlen("lamp On!\n"),0xffff);
+            HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);//打开灯
+            time_cnt = 0;    //计时清零
+            step++;
+            break;
+        case 3:
+            if(++time_cnt>=5000)//计时5秒
+            {
+                HAL_UART_Transmit(&huart1,"lamp off!\n",strlen("lamp off!\n"),0xffff);
+                HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);//关闭灯
+                MovingObjectFg = 0;
+                step = 1;
+            }
+            break;
+    }
+}
 /* USER CODE END 0 */
 
 /**
@@ -105,7 +213,8 @@ int main(void)
   DHT11_Init();
   HAL_Delay(1500);
   /* USER CODE BEGIN 2 */
-
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);//先关闭灯
+  // HAL_TIM_Base_Start_IT(&htim4);//开启定时器4中断
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,6 +230,14 @@ int main(void)
 
     HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
+    if(Timer1msFg)
+    {
+      Timer1msFg = 0;
+      AnaSampleCalc();
+      DayOrNightJudge();
+      LoudVoiceDetection();
+      LampControl();
+    }
   }
   /* USER CODE END 3 */
 }
