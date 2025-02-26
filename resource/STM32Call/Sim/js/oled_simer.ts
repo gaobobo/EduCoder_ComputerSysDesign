@@ -1,0 +1,211 @@
+import * as http from 'http';
+import * as url from 'url';
+
+interface OledDataFrame {
+    device: "oled-display",
+    protocol: "Hardware-SPI" | "Simulating-SPI",
+    cmd: number,
+    width_max: number,
+    heigth_max: number,
+    dir: number,
+    x: number,
+    y: number,
+    data: number[],
+    pattern: "forward" | "backward",
+    lattice: "positive" | "negative",
+    color: "#ffffff"
+}
+
+interface OledIO {
+    clk: number,
+    din: number,
+    rst: number,
+    dc: number,
+    cs: number,
+}
+
+const g_CmdType = {
+    invalid : 0,
+    reset: 1,
+    data: 2,
+    showOn: 3,
+    showOff: 4
+}
+
+let g_lastRecord = {
+    cs: 0,
+    clk: 0,
+    data: 0,
+    status: 0,
+    x: 0,
+    xLow: 0,
+    xHigh: 0,
+    y: 0,
+    posIsUpdated: false,
+}
+
+/**
+ * @description: 显示器驱动仿真
+ * @param {number} clk 时钟信号值
+ * @param {number} din 数据信号值
+ * @param {number} rst 复位信号值
+ * @param {number} dc  数据/命令信号值
+ * @param {number} cs  片选信号值
+ * @return {string} json格式的字符串，详情见 https://yunfeng-il.coding.net/p/stm32sim/wiki/3
+ */
+function simer(clk: number, din: number, rst: number, dc: number, cs: number) {
+    let outStr: OledDataFrame = {
+        device: "oled-display",
+        protocol: "Simulating-SPI",
+        cmd: g_CmdType.invalid,
+        width_max: 128,
+        heigth_max: 64,
+        dir: 0,
+        x: 0,
+        y: 0,
+        data: [0],
+        pattern: "forward",
+        lattice: "positive",
+        color: "#ffffff"
+    }
+
+    let isCmd = false, isData = false;
+    if (g_lastRecord.cs == 1 && cs == 0) {
+        g_lastRecord.status = 1;
+        g_lastRecord.data = 0;
+    }
+
+
+    if (rst == 0) {
+        outStr.cmd = g_CmdType.reset;
+        g_lastRecord.status = 0;
+    }
+    else if (g_lastRecord.status == 0) {
+        outStr.cmd = g_CmdType.invalid;
+    }
+    // 命令传输中
+    else if (g_lastRecord.status == 1) {
+        if (g_lastRecord.clk == 0 && clk == 1) {
+            g_lastRecord.data = (g_lastRecord.data << 1) | din;
+        }
+
+        if (cs == 1) {
+            // 传输结束，取数据
+            if (dc == 1) {
+                isData = true;
+            }
+            else {
+                isCmd = true;
+            }
+            g_lastRecord.status = 0;
+        }
+    }
+    else {
+        console.log('无效状态', g_lastRecord.status);
+    }
+
+    // 命令
+    if (isCmd) {
+        // 关闭显示
+        if (g_lastRecord.data == 0xAE) {
+            outStr.cmd = g_CmdType.showOff;
+        }
+        // 开启显示
+        else if (g_lastRecord.data == 0xAF) {
+            outStr.cmd = g_CmdType.showOn;        
+        }
+        // 坐标
+        else if ((g_lastRecord.data & 0xF0) == 0xB0) {
+            g_lastRecord.y = g_lastRecord.data & 0x0F;
+            g_lastRecord.y *= 8;
+            g_lastRecord.posIsUpdated = true;
+        }
+        else if ((g_lastRecord.data & 0xF0) == 0) {
+            g_lastRecord.xLow = g_lastRecord.data & 0x0F;
+            g_lastRecord.x |= g_lastRecord.xLow;
+            g_lastRecord.posIsUpdated = true;
+        }
+        else if ((g_lastRecord.data & 0xF0) == 0x10) {
+            g_lastRecord.xHigh = (g_lastRecord.data & 0x0F) << 4;
+            g_lastRecord.x = g_lastRecord.xHigh | g_lastRecord.xLow;
+            g_lastRecord.posIsUpdated = true;
+        }
+        // console.log(g_lastRecord.data);
+    }
+    // 数据
+    else if (isData) {
+        // 没有更新坐标值，则x自动循环递增
+        if (g_lastRecord.posIsUpdated == false) {
+            if (++g_lastRecord.x >= outStr.width_max) {
+                g_lastRecord.x = 0;
+            }
+        }
+
+        outStr.data[0] = g_lastRecord.data;
+        outStr.cmd = g_CmdType.data;
+        outStr.x = g_lastRecord.x;
+        outStr.y = g_lastRecord.y;
+        // console.log('x=', outStr.x, 'y=', outStr.y);
+
+        g_lastRecord.posIsUpdated = false;
+    }
+
+    g_lastRecord.clk = clk;
+    g_lastRecord.cs = cs;
+
+    return outStr;
+}
+
+/**
+ * @description: 创建HTTP服务器，调试专用
+ * @param {*} http
+ * @return {*}
+ */
+const server = http.createServer((req, res) => {
+    let outStr = '{ "msg": Hello World }';
+    if (req.method === 'GET') {
+        const tUrl = url.parse(req.url || "", true);
+        let tQuery = Object.assign({}, tUrl.query);
+        // 处理GET请求参数
+        console.log(tQuery);
+
+        // 处理HTTP请求
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(outStr);
+    } else if (req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            const tUrl = new URL(req.url || '', 'http://localhost');
+            let oData = '';
+
+            if (tUrl.pathname === '/') {
+                const ioData = JSON.parse(body) as OledIO;
+                // 处理POST请求参数
+                // console.log(ioData);
+                oData = JSON.stringify(simer(ioData.clk, ioData.din, ioData.rst, ioData.dc, ioData.cs));
+            }
+            else if (tUrl.pathname === '/simp') {
+
+            }
+            // 处理HTTP请求
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(oData);
+        });
+    }
+});
+
+
+// 启动HTTP服务器，调试专用
+const port = process.env.PORT || 3000;
+// server.listen(port, () => {
+//     console.log(`服务器正在运行，监听端口 ${port}`);
+// });
+
+export {
+    simer
+}

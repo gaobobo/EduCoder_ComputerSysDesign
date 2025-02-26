@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "adc.h": "c",
+        "retarget.h": "c"
+    }
+}

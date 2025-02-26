@@ -1,0 +1,7 @@
+../Core/Src/lcd_init.c:11:7:LCD_GPIO_Init	8	static
+../Core/Src/lcd_init.c:26:7:LCD_Writ_Bus	24	static
+../Core/Src/lcd_init.c:52:7:LCD_WR_DATA8	16	static
+../Core/Src/lcd_init.c:62:7:LCD_WR_DATA	16	static
+../Core/Src/lcd_init.c:73:7:LCD_WR_REG	16	static
+../Core/Src/lcd_init.c:86:7:LCD_Address_Set	24	static
+../Core/Src/lcd_init.c:130:7:LCD_Init	8	static
