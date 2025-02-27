@@ -9,7 +9,7 @@ echo "开始评测..."
 echo "PRO.hex已生成，编译成功！"
 echo "PRO.hex文件可下载：通关成功！"
 echo -n "请下载PRO.hex文件至本地开发板验证！"
-' >> /data/workspace/myshixun/main.sh
+' > /data/workspace/myshixun/main.sh
 }
 
 normal_pass() {
