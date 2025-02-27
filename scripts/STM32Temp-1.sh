@@ -17,6 +17,11 @@ normal_pass() {
        ${Branch} \
        "/home/stm32/DHT11/Debug/DHT11.hex"
 
+       echo -e "\e[38;5;51;7m 提示： \e[0m高峰时期网络缓慢，脚本只会下载编译好的固件通过评测。" \
+       "如果你需要完整项目，请使用git clone克隆仓库，只拉取特定项目可以使用稀疏克隆" \
+       "（git sparse-checkout）。"
+
+
 }
 
 
