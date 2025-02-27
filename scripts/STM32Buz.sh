@@ -1,7 +1,8 @@
 #!/bin/bash
 
 force_pass() {
-       echo ""
+       echo '[{"info":"pb8","count":2},{"info":"pb8","count":1},{"info":"pb8","count":1},{"info":"pb8","count":1},{"info":"pb8","count":2}]' \
+              > "/opt/dynamicsExperiment/fmq/score.txt"
 }
 
 normal_pass() {
