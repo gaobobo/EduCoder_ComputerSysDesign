@@ -22,19 +22,72 @@ Options:
          EduCoder_ComputerSysDesign
         Copyright (c) GaoShibo, 2024
 See more at: github.com/gaobobo/EduCoder_ComputerSysDesign
-
 '
-
+    exit "${1}"
 }
 
+
+# exit if no params
 if [ -z "$1" ]; then
-    helpInfo
-    exit 1
+    helpInfo 1
 fi
 
-LevelCode=$1
-DownloadSite=${2:-Gitee}
-Brach=${3:-main}
+
+
+LevelCode=${1}
+DownloadSite="Gitee"
+Brach="main"
+Force=""
+
+# save params
+for i in "$@"; do
+    params_num=${#params[*]}
+    ((params_num++))
+    params[$params_num]=$i
+done
+
+# recongnize params
+i=2
+while [ ${i} -le "${#params[*]}" ]
+do
+
+    if [ "${params[$i]}" = "-f" ] || [ "${params[$i]}" = "--force" ]
+    then 
+
+        ((i++))
+        Force="--force"
+
+    elif [ "${params[$i]}" = "-m" ] || [ "${params[$i]}" = "--mirror" ]
+    then 
+
+        ((i++))
+
+        case "${params[$i]}" in
+
+            "Gitee") DownloadSite="Gitee" ;;
+            "Github") DownloadSite="Github" ;;
+            *) 
+                echo "Unknow download mirror."
+                echo "未知的镜像下载点。"
+                helpInfo 1
+            ;;
+        esac
+
+    elif [ "${params[$i]}" = "-b" ] || [ "${params[$i]}" = "--branch" ]
+    then 
+
+        ((i++))
+        Brach="${params[$i]}"
+
+    else
+
+        echo "Unknow option: ${params[$i]}"
+        echo "未知的选项：${params[$i]}"
+        helpInfo 1
+
+    fi
+
+done
 
 case $DownloadSite in
     Gitee)
@@ -51,7 +104,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-source /tmp/download.sh ${DownloadSite} ${Brach} scripts/${LevelCode}.sh
+source /tmp/download.sh scripts/${LevelCode}.sh ${LevelCode}.sh ${DownloadSite} ${Brach}
 
 if [ $? -ne 0 ]; then
     echo "Download ${LevelCode}.sh failed. Is the LevelCode correct?"
@@ -59,7 +112,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-source /tmp/${LevelCode}.sh ${DownloadSite} ${Brach}
+source /tmp/${LevelCode}.sh ${DownloadSite} ${Brach} ${Force}
 
 if [ $? -eq 0 ]; then
     echo "脚本运行完成。可直接评测。"
