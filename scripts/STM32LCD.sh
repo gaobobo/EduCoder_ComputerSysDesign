@@ -20,6 +20,7 @@ fi
 
 DownloadSite=${1:-Gitee}
 Brach=${2:-main}
+Force=${3:+"--force"}
 
 source /tmp/download.sh \
        ${DownloadSite} \
