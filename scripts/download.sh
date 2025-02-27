@@ -22,6 +22,8 @@ DownloadSite=${3:-"Gitee"}
 Branch=${4:-"main"}
 FilePath=${5:-"/tmp/${FileName}"}
 
+mkdir -p "$(dirname "${FilePath}")"
+
 case $DownloadSite in
     Gitee)
         wget -O ${FilePath} https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Branch}/${FileURL}
