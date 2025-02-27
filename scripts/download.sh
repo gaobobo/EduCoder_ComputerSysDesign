@@ -10,8 +10,8 @@ Options:
         (  Gitee|Github  )
 
         Gitee|Github                       Repo mirror to download resource [default: Gitee]
-        main|dev|<branch>       Repo branch where download resouce from [default: main]
-        <FileSavePath>                       The file save position
+        main|dev|<branch>                  Repo branch where download resouce from [default: main]
+        <FileSavePath>                     The file save position
 '
     return 1
 fi
