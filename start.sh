@@ -70,7 +70,6 @@ do
             *) 
                 echo -e "\e[38;5;9;7m Error: \e[0mUnknow download mirror."
                 echo -e "\e[38;5;9;7m 错误: \e[0m未知的镜像下载点。"
-                helpInfo 1
             ;;
         esac
 
@@ -84,7 +83,6 @@ do
 
         echo -e "\e[38;5;9;7m Error: \e[0mUnknow option: ${params[$i]}"
         echo -e "\e[38;5;9;7m 错误: \e[0m未知的选项：${params[$i]}"
-        helpInfo 1
 
     fi
 
