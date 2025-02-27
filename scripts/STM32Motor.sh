@@ -11,6 +11,9 @@ normal_pass() {
        ${DownloadSite} \
        ${Branch} \
        "/opt/workspace/stm32f103rbt6-fw_dc_motor/.pio/build/genericSTM32F103RB/firmware.elf"
+
+       echo -e "\e[38;5;51;7m 提示： \e[0m固件已经拷贝完成，但该关卡可能需要额外的评测步骤。" \
+              "请参照左侧说明进行评测。欲要直接评测，请添加-f或--force参数以便使用force模式。"
 }
 
 
