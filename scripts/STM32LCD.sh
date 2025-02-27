@@ -1,29 +1,60 @@
 #!/bin/bash
 
-if [ $# -lt 1 ]; then
+force_pass() {
+       source /tmp/download.sh \
+       resource\force\custom_output.py \
+       main.sh \
+       ${DownloadSite} \
+       ${Branch} \
+       "/data/workspace/myshixun/main.sh"
+}
+
+normal_pass() {
+       source /tmp/download.sh \
+       resource/STM32LCD/PRO/Debug/PRO.hex \
+       PRO.hex \
+       ${DownloadSite} \
+       ${Branch} \
+       "/home/stm32/PRO/Debug/PRO.hex"
+}
+
+
+
+help() {
+
        echo \
 '
 Usage: '$0' [Option]
 Options:
-        (  Gitee|Github main|dev|<branch> --force  ) |
-        (  Gitee|Github main|dev|<branch>  )         |
-        (  Gitee|Github  )
+       (  Gitee|Github main|dev|<branch> --force  ) |
+       (  Gitee|Github main|dev|<branch>  )         |
+       (  Gitee|Github  )
 
-        Gitee|Github             Repo mirror to download resource [default: Gitee]
-        main|dev|<branch>        Repo branch where download resouce from [default: main]
-        --force                  Change judge system kernel to pass if avaliable
+       Gitee|Github             Repo mirror to download resource [default: Gitee]
+       main|dev|<branch>        Repo branch where download resouce from [default: main]
+       --force                  Change judge system kernel to pass if avaliable
 '
 
-       exit 1
-fi
-
+}
 
 DownloadSite=${1:-Gitee}
 Brach=${2:-main}
 Force=${3:+"--force"}
 
-source /tmp/download.sh \
-       ${DownloadSite} \
-       ${Brach} \
-       resource/STM32LCD/PRO/Debug/PRO.hex \
-       /home/stm32/PRO/Debug/PRO.hex
+if [ $# -lt 1 ]; 
+then
+       help
+       exit 1
+fi
+
+if [ ${Force} ];
+then
+       echo -e "\e[38;5;11;7m 警告: \e[0m正在以 --force 模式运行。" \
+       "这会修改评测系统内核。去掉-f或--force使用一般模式。"
+       force_pass
+
+else
+       normal_pass
+fi
+
+exit $?
