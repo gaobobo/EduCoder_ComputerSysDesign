@@ -33,7 +33,7 @@ if [ -z "$1" ]; then
     exit 0
 fi
 
-
+echo -e "\e[38;5;6;7m $(date): \e[0m脚本已启动。"
 
 LevelCode=${1}
 DownloadSite="Gitee"
@@ -89,6 +89,8 @@ do
     ((i++))
 
 done
+
+echo -e "\e[38;5;51;7m 提示： \e[0m下载点是${DownloadSite}，下载分支是${Branch}。"
 
 case $DownloadSite in
     Gitee)
