@@ -34,7 +34,7 @@ esac
 if [ $? -ne 0 ]; then
     echo "Download ${FileName} failed. Is the network disconnected or wrong LevelCode?"
     echo "下载 ${FileName} 失败。是否网络不通或错误的关卡代码？"
-    exit 1
+    return 1
 fi
 
-exit 0
+return 0
