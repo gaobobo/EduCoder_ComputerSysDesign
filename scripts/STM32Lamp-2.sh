@@ -1,7 +1,7 @@
 #!/bin/bash
 
 force_pass() {
-       echo 'print("", end="")' > "/data/workspace/myshixun/step1.py/text.py"
+       echo 'print("", end="")' > "/data/workspace/myshixun/step2/mqtt_test.py"
 }
 
 normal_pass() {
