@@ -10,7 +10,7 @@ help() {
 if [ $# -lt 1 ]; 
 then
        help
-       exit 1
+       return 1
 fi
 
 echo "$2" "$1"
