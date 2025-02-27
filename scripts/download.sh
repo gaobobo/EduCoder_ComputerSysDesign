@@ -10,8 +10,8 @@ Options:
         (  Gitee|Github  )
 
         Gitee|Github                       Repo mirror to download resource [default: Gitee]
-        main|dev|<branch>       Repo branch where download resouce from [default: main]
-        <FileSavePath>                       The file save position
+        main|dev|<branch>                  Repo branch where download resouce from [default: main]
+        <FileSavePath>                     The file save position
 '
     return 1
 fi
@@ -34,8 +34,8 @@ case $DownloadSite in
 esac
 
 if [ $? -ne 0 ]; then
-    echo -e "\e[38;5;9;7m Error: \e[0mDownload ${FileName} failed. Is the network disconnected or wrong LevelCode?"
-    echo -e "\e[38;5;9;7m 错误: \e[0m下载 ${FileName} 失败。是否网络不通或错误的关卡代码？"
+    echo -e "\e[38;5;9;7m Error: \e[0mDownload ${FileName} failed. Is the network disconnected?"
+    echo -e "\e[38;5;9;7m 错误: \e[0m下载 ${FileName} 失败。是否网络不通？"
     return 1
 fi
 

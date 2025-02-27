@@ -26,6 +26,20 @@ See more at: github.com/gaobobo/EduCoder_ComputerSysDesign
 
 }
 
+error_check() {
+    if [ $1 -eq 1 ]; then
+        echo -e "\e[38;5;9;7m 意料内错误: \e[0m脚本运行失败。请重试。"
+        exit 1
+    elif [ $1 -eq 2 ]; then
+        echo -e "\e[38;5;9;7m 未知的内部错误: \e[0m脚本运行时报告了内部命令错误。如果反复出现可能是脚本问题。" \
+                "请至\e[4mgithub.com/gaobobo/EduCoder_ComputerSysDesign\e[0m反馈问题。"
+        exit 2
+    elif [ $1 != 0  ]; then
+        echo -e "\e[38;5;9;7m 意料外错误: \e[0m脚本运行失败。请重试。"
+        exit $1
+    fi
+}
+
 
 # exit if no params
 if [ -z "$1" ]; then
@@ -109,15 +123,12 @@ fi
 
 source /tmp/download.sh scripts/${LevelCode}.sh ${LevelCode}.sh ${DownloadSite} ${Branch}
 
+error_check $?
+
 source /tmp/${LevelCode}.sh ${DownloadSite} ${Branch} ${Force}
 
 if [ $? -eq 0 ]; then
     echo -e "\e[38;5;10;7m 完成: \e[0m脚本运行完成。可直接评测。"
-elif [ $? -eq 1 ]; then
-    echo -e "\e[38;5;9;7m 意料内错误: \e[0m脚本运行失败。请重试。"
-elif [ $? -eq 2 ]; then
-    echo -e "\e[38;5;9;7m 未知的内部错误: \e[0m脚本运行时报告了内部命令错误。如果反复出现可能是脚本问题。" \
-            "请至\e[4mgithub.com/gaobobo/EduCoder_ComputerSysDesign\e[0m反馈问题。"
 else
-    echo -e "\e[38;5;9;7m 意料外错误: \e[0m脚本运行失败。请重试。"
+    error_check $?
 fi
