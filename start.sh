@@ -23,13 +23,14 @@ Options:
         Copyright (c) GaoShibo, 2024
 See more at: github.com/gaobobo/EduCoder_ComputerSysDesign
 '
-    exit "${1}"
+
 }
 
 
 # exit if no params
 if [ -z "$1" ]; then
-    helpInfo 1
+    helpInfo
+    exit 0
 fi
 
 
@@ -106,16 +107,15 @@ fi
 
 source /tmp/download.sh scripts/${LevelCode}.sh ${LevelCode}.sh ${DownloadSite} ${Brach}
 
-if [ $? -ne 0 ]; then
-    echo "Download ${LevelCode}.sh failed. Is the LevelCode correct?"
-    echo "下载 ${LevelCode}.sh 失败。关卡编号是否正确？"
-    exit 1
-fi
-
 source /tmp/${LevelCode}.sh ${DownloadSite} ${Brach} ${Force}
 
 if [ $? -eq 0 ]; then
-    echo "脚本运行完成。可直接评测。"
+    echo -e "\e[38;5;10;7m 完成: \e[0m脚本运行完成。可直接评测。"
+elif [ $? -eq 1 ]; then
+    echo -e "\e[38;5;9;7m 意料内错误: \e[0m脚本运行失败。请重试。"
+elif [ $? -eq 2 ]; then
+    echo -e "\e[38;5;9;7m 未知的内部错误: \e[0m脚本运行时报告了内部命令错误。如果反复出现可能是脚本问题。" \
+            "请至\e[4mgithub.com/gaobobo/EduCoder_ComputerSysDesign\e[0m反馈问题。"
 else
-    echo "脚本运行失败。请重试。"
+    echo -e "\e[38;5;9;7m 意料外错误: \e[0m脚本运行失败。请重试。"
 fi
