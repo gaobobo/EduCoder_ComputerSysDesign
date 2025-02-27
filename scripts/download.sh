@@ -1,7 +1,19 @@
 #!/bin/bash
 
-if [ -z "$1" ]; then
-    exit 0
+if [ $# -lt 2 ]; then
+    echo \
+'
+Usage: download.sh <FileURL> <FileName> [options]
+Options:
+        (  Gitee|Github main|dev|<branch> <FileSavePath>  ) |
+        (  Gitee|Github main|dev|<branch>  )                  |
+        (  Gitee|Github  )
+
+        [Gitee|Github]                       Repo mirror to download resource [default: Gitee]
+        -b|--brach [main|dev|<branch>]       Repo branch where download resouce from [default: main]
+        <FileSavePath>                       The file save position
+'
+    exit 1
 fi
 
 DownloadSite=${1:-Gitee}
