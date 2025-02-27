@@ -34,8 +34,8 @@ case $DownloadSite in
 esac
 
 if [ $? -ne 0 ]; then
-    echo "Download ${FileName} failed. Is the network disconnected or wrong LevelCode?"
-    echo "下载 ${FileName} 失败。是否网络不通或错误的关卡代码？"
+    echo -e "\e[38;5;9;7m Error: \e[0mDownload ${FileName} failed. Is the network disconnected or wrong LevelCode?"
+    echo -e "\e[38;5;9;7m 错误: \e[0m下载 ${FileName} 失败。是否网络不通或错误的关卡代码？"
     return 1
 fi
 
