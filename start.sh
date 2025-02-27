@@ -88,6 +88,8 @@ do
 
     fi
 
+    ((i++))
+
 done
 
 case $DownloadSite in
