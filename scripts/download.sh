@@ -13,7 +13,7 @@ Options:
         main|dev|<branch>       Repo branch where download resouce from [default: main]
         <FileSavePath>                       The file save position
 '
-    exit 1
+    return 1
 fi
 
 FileURL=${1}

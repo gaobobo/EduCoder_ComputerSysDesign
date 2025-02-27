@@ -44,7 +44,7 @@ Force=${3:+"--force"}
 if [ $# -lt 1 ]; 
 then
        help
-       exit 1
+       return 1
 fi
 
 if [ ${Force} ];
@@ -57,4 +57,4 @@ else
        normal_pass
 fi
 
-exit $?
+return $?
