@@ -14,7 +14,7 @@ echo -n "请下载PRO.hex文件至本地开发板验证！"
 
 normal_pass() {
        source /tmp/download.sh \
-       resource/STM32LCD/PRO/Debug/PRO.hex \
+       resource/STM32BLE/PRO/Debug/PRO.hex \
        PRO.hex \
        ${DownloadSite} \
        ${Branch} \

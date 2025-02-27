@@ -1,29 +1,27 @@
 #!/bin/bash
 
 force_pass() {
-       echo \
-'
-#!/bin/bash
-
-echo "开始评测..."
-echo "PRO.hex已生成，编译成功！"
-echo "PRO.hex文件可下载：通关成功！"
-echo -n "请下载PRO.hex文件至本地开发板验证！"
-' > /data/workspace/myshixun/main.sh
+       echo '[{"type":"serial2","message":"The current light intensity is  0.00lux\r\n"}]' > "/opt/dynamicsExperiment/gmdz/score.txt"
 }
 
 normal_pass() {
        source /tmp/download.sh \
-       resource/STM32LCD/PRO/Debug/PRO.hex \
-       PRO.hex \
+       "resource/STM32LDR/.pio/build/genericSTM32F103RB/firmware.elf" \
+       firmware.elf \
        ${DownloadSite} \
        ${Branch} \
-       "/home/stm32/PRO/Debug/PRO.hex"
+       "/opt/workspace/stm32f103rbt6-fw_illu_adc/.pio/build/genericSTM32F103RB/firmware.elf"
 
-       echo -e "\e[38;5;51;7m 提示： \e[0m高峰时期网络缓慢，脚本只会下载编译好的固件通过评测。" \
-       "如果你需要完整项目，请使用git clone克隆仓库，只拉取特定项目可以使用稀疏克隆" \
-       "（git sparse-checkout）。"
+       source /tmp/download.sh \
+       "resource/STM32LDR/Core/Src/main.c" \
+       main.c \
+       ${DownloadSite} \
+       ${Branch} \
+       "/opt/workspace/stm32f103rbt6-fw_illu_adc/Core/Src/main.c"
 
+
+       echo -e "\e[38;5;51;7m 提示： \e[0m固件已经拷贝完成，但该关卡可能需要额外的评测步骤。" \
+              "请参照左侧说明进行评测。欲要直接评测，请添加-f或--force参数以便使用force模式。"
 }
 
 

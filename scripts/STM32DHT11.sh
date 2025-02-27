@@ -6,19 +6,19 @@ force_pass() {
 #!/bin/bash
 
 echo "开始评测..."
-echo "PRO.hex已生成，编译成功！"
-echo "PRO.hex文件可下载：通关成功！"
-echo -n "请下载PRO.hex文件至本地开发板验证！"
+echo "DHT11.hex已生成，编译成功！"
+echo "DHT11.hex文件可下载：通关成功！"
+echo -n "请下载DHT11.hex文件至本地开发板验证！"
 ' > /data/workspace/myshixun/main.sh
 }
 
 normal_pass() {
        source /tmp/download.sh \
-       resource/STM32LCD/PRO/Debug/PRO.hex \
-       PRO.hex \
+       "resource/STM32DHT11/DHT11/Debug/DHT11.hex" \
+       DHT11.hex \
        ${DownloadSite} \
        ${Branch} \
-       "/home/stm32/PRO/Debug/PRO.hex"
+       "/home/stm32/DHT11/Debug/DHT11.hex"
 
        echo -e "\e[38;5;51;7m 提示： \e[0m高峰时期网络缓慢，脚本只会下载编译好的固件通过评测。" \
        "如果你需要完整项目，请使用git clone克隆仓库，只拉取特定项目可以使用稀疏克隆" \

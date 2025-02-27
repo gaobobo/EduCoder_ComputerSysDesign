@@ -97,7 +97,7 @@ do
 
         echo -e "\e[38;5;9;7m Error: \e[0mUnknow option: ${params[$i]}"
         echo -e "\e[38;5;9;7m 错误: \e[0m未知的选项：${params[$i]}"
-
+        exit 1
     fi
 
     ((i++))
