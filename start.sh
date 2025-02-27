@@ -4,14 +4,14 @@ helpInfo(){
 
     echo \
 '
-Usage: start.sh <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
+Usage: '$0' <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
 Options:
         <Level>                              Level Code. See at /scripts/ in repo
         -f|--force                           Change judge system kernel to pass if avaliable
         -m|--mirrior [Gitee|Github]          Repo mirror to download resource [default: Gitee]
         -b|--brach [main|dev|<branch>]       Repo branch where download resouce from [default: main]
 
-用法: start.sh <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
+用法: '$0' <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
 选项:
         <Level>                              关卡代码。详见仓库的/scripts/目录。
         -f|--force                           如可用，修改评测系统内核通关。

@@ -3,7 +3,7 @@
 if [ $# -lt 2 ]; then
     echo \
 '
-Usage: download.sh <FileURL> <FileName> [options]
+Usage: '$0' <FileURL> <FileName> [options]
 Options:
         (  Gitee|Github main|dev|<branch> <FileSavePath>  ) |
         (  Gitee|Github main|dev|<branch>  )                  |
