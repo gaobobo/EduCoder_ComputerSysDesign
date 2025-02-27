@@ -67,8 +67,8 @@ do
             "Gitee") DownloadSite="Gitee" ;;
             "Github") DownloadSite="Github" ;;
             *) 
-                echo "Unknow download mirror."
-                echo "未知的镜像下载点。"
+                echo -e "\e[38;5;9;7m Error: \e[0mUnknow download mirror."
+                echo -e "\e[38;5;9;7m 错误: \e[0m未知的镜像下载点。"
                 helpInfo 1
             ;;
         esac
@@ -81,8 +81,8 @@ do
 
     else
 
-        echo "Unknow option: ${params[$i]}"
-        echo "未知的选项：${params[$i]}"
+        echo -e "\e[38;5;9;7m Error: \e[0mUnknow option: ${params[$i]}"
+        echo -e "\e[38;5;9;7m 错误: \e[0m未知的选项：${params[$i]}"
         helpInfo 1
 
     fi
@@ -99,8 +99,8 @@ case $DownloadSite in
 esac
 
 if [ $? -ne 0 ]; then
-    echo "Download download.sh failed. Is the network disconnected?"
-    echo "下载 download.sh 失败。是否网络不通？"
+    echo -e "\e[38;5;9;7m Error: \e[0mDownload download.sh failed. Is the network disconnected?"
+    echo -e "\e[38;5;9;7m 错误: \e[0m下载 download.sh 失败。是否网络不通？"
     exit 1
 fi
 
