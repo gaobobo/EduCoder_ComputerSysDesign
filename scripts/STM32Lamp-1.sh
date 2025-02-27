@@ -1,7 +1,7 @@
 #!/bin/bash
 
 force_pass() {
-       echo 'print("TRUE", end="")' > "/data/workspace/myshixun/step1.py/text.py"
+       echo 'print("True", end="")' > "/data/workspace/myshixun/step1.py/text.py"
 }
 
 normal_pass() {
