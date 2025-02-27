@@ -1,7 +1,7 @@
 #!/bin/bash
 
 force_pass() {
-       echo -n "[{"info":"pd5","count":2}]" > /opt/dynamicsExperiment/zldj/score.txt
+       echo -n '[{"info":"pd5","count":2}]' > /opt/dynamicsExperiment/zldj/score.txt
 }
 
 normal_pass() {
