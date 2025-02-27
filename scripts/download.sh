@@ -9,8 +9,8 @@ Options:
         (  Gitee|Github main|dev|<branch>  )                  |
         (  Gitee|Github  )
 
-        [Gitee|Github]                       Repo mirror to download resource [default: Gitee]
-        -b|--brach [main|dev|<branch>]       Repo branch where download resouce from [default: main]
+        Gitee|Github                       Repo mirror to download resource [default: Gitee]
+        main|dev|<branch>       Repo branch where download resouce from [default: main]
         <FileSavePath>                       The file save position
 '
     exit 1
