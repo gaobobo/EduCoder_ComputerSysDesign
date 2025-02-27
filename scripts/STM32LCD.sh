@@ -38,7 +38,7 @@ Options:
 }
 
 DownloadSite=${1:-Gitee}
-Brach=${2:-main}
+Branch=${2:-main}
 Force=${3:+"--force"}
 
 if [ $# -lt 1 ]; 

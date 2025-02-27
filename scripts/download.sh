@@ -19,15 +19,15 @@ fi
 FileURL=${1}
 FileName=${2}
 DownloadSite=${3:-"Gitee"}
-Brach=${4:-"main"}
+Branch=${4:-"main"}
 FilePath=${5:-"/tmp/${FileName}"}
 
 case $DownloadSite in
     Gitee)
-        wget -O ${FilePath} https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Brach}/${FileURL}
+        wget -O ${FilePath} https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Branch}/${FileURL}
         ;;
     Github)
-        wget -O ${FilePath} https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Brach}/${FileURL}
+        wget -O ${FilePath} https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Branch}/${FileURL}
         ;;
 esac
 

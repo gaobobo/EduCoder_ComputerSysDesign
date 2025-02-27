@@ -4,19 +4,19 @@ helpInfo(){
 
     echo \
 '
-Usage: '$0' <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
+Usage: '$0' <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--Branch [main|dev|<branch>]]
 Options:
         <Level>                              Level Code. See at /scripts/ in repo
         -f|--force                           Change judge system kernel to pass if avaliable
         -m|--mirrior [Gitee|Github]          Repo mirror to download resource [default: Gitee]
-        -b|--brach [main|dev|<branch>]       Repo branch where download resouce from [default: main]
+        -b|--Branch [main|dev|<branch>]       Repo branch where download resouce from [default: main]
 
-用法: '$0' <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--brach [main|dev|<branch>]]
+用法: '$0' <Level> [-f|--force] [-m|--mirror [Gitee|Github]] [-b|--Branch [main|dev|<branch>]]
 选项:
         <Level>                              关卡代码。详见仓库的/scripts/目录。
         -f|--force                           如可用，修改评测系统内核通关。
         -m|--mirrior [Gitee|Github]          下载资源文件时使用的仓库镜像。 [默认: Gitee]
-        -b|--brach [main|dev|<branch>]       下载资源文件时的分支。 [默认: main]
+        -b|--Branch [main|dev|<branch>]       下载资源文件时的分支。 [默认: main]
 
 ============================================
          EduCoder_ComputerSysDesign
@@ -37,7 +37,7 @@ echo -e "\e[38;5;6;7m $(date): \e[0m脚本已启动。"
 
 LevelCode=${1}
 DownloadSite="Gitee"
-Brach="main"
+Branch="main"
 Force=""
 
 # save params
@@ -77,7 +77,7 @@ do
     then 
 
         ((i++))
-        Brach="${params[$i]}"
+        Branch="${params[$i]}"
 
     else
 
@@ -94,10 +94,10 @@ echo -e "\e[38;5;51;7m 提示： \e[0m下载点是${DownloadSite}，下载分支
 
 case $DownloadSite in
     Gitee)
-        wget -O /tmp/download.sh https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Brach}/scripts/download.sh
+        wget -O /tmp/download.sh https://gitee.com/coconut_floss/EduCoder_ComputerSysDesign/raw/${Branch}/scripts/download.sh
         ;;
     Github)
-        wget -O /tmp/download.sh https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Brach}/scripts/download.sh
+        wget -O /tmp/download.sh https://raw.githubusercontent.com/gaobobo/EduCoder_ComputerSysDesign/${Branch}/scripts/download.sh
         ;;
 esac
 
@@ -107,9 +107,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-source /tmp/download.sh scripts/${LevelCode}.sh ${LevelCode}.sh ${DownloadSite} ${Brach}
+source /tmp/download.sh scripts/${LevelCode}.sh ${LevelCode}.sh ${DownloadSite} ${Branch}
 
-source /tmp/${LevelCode}.sh ${DownloadSite} ${Brach} ${Force}
+source /tmp/${LevelCode}.sh ${DownloadSite} ${Branch} ${Force}
 
 if [ $? -eq 0 ]; then
     echo -e "\e[38;5;10;7m 完成: \e[0m脚本运行完成。可直接评测。"
