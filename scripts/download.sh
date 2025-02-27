@@ -16,10 +16,10 @@ Options:
     exit 1
 fi
 
-DownloadSite=${1:-Gitee}
-Brach=${2:-main}
-FileURL=$3
-FileName=$4
+FileURL=${1}
+FileName=${2}
+DownloadSite=${3:-"Gitee"}
+Brach=${4:-"main"}
 FilePath=${5:-"/tmp/${FileName}"}
 
 case $DownloadSite in
