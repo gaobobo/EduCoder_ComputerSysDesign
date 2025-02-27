@@ -1,7 +1,7 @@
 #!/bin/bash
 
 force_pass() {
-       echo ""
+       echo '[{"type":"serial2","message":"ADC1_IN0(PA0)=0.00\r\n"}]' > "/opt/dynamicsExperiment/ktdz/score.txt"
 }
 
 normal_pass() {
