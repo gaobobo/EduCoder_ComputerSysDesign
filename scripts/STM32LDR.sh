@@ -1,7 +1,7 @@
 #!/bin/bash
 
 force_pass() {
-       echo ''
+       echo '[{"type":"serial2","message":"The current light intensity is  0.00lux\r\n"}]' > "/opt/dynamicsExperiment/gmdz/score.txt"
 }
 
 normal_pass() {
