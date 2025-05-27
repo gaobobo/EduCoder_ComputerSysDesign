@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+>
+> 本人该门课程已经结课，故不再更新。
+
 # 头歌STM32单片机开发闯关脚本
 
 该脚本用于通过头歌的单片机实践项目。支持的关卡参见本仓库的 [`/scripts/`](https://github.com/gaobobo/EduCoder_ComputerSysDesign/tree/main/scripts) 或参见 [微信文章](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=Mzg4Njg3NDQ2Ng==&action=getalbum&album_id=3875099464167505928#wechat_redirect) 。
