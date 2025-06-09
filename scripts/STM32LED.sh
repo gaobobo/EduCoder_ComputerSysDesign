@@ -6,7 +6,7 @@ force_pass() {
 
 normal_pass() {
        source /tmp/download.sh \
-       "resource/STM32LED/.pio/build/genericSTM32F103RB/firmware.bin" 
+       "resource/STM32LED/.pio/build/genericSTM32F103RB/firmware.bin" \
        firmware.bin \
        ${DownloadSite} \
        ${Branch} \
