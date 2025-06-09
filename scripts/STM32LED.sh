@@ -10,14 +10,14 @@ normal_pass() {
        firmware.elf \
        ${DownloadSite} \
        ${Branch} \
-       "/opt/workspace/stm32f103rbt6-fw_dc_led/.pio/build/genericSTM32F103RB/firmware.elf"
+       "/opt/workspace/stm32f103rbt6-fw_led/.pio/build/genericSTM32F103RB/firmware.elf"
 
        source /tmp/download.sh \
        "resource/STM32LED/Core/Src/main.c" \
        main.c \
        ${DownloadSite} \
        ${Branch} \
-       "/opt/workspace/stm32f103rbt6-fw_dc_led/Core/Src/main.c"
+       "/opt/workspace/stm32f103rbt6-fw_led/Core/Src/main.c"
 
 
        echo -e "\e[38;5;51;7m 提示： \e[0m固件已经拷贝完成，但该关卡可能需要额外的评测步骤。" \
