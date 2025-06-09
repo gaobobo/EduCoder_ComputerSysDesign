@@ -17,7 +17,7 @@ normal_pass() {
        main.c \
        ${DownloadSite} \
        ${Branch} \
-       "/opt/workspace/stm32f103rbt6-fw_dc_led/resource/STM32Motor/Core/Src/main.c"
+       "/opt/workspace/stm32f103rbt6-fw_dc_led/Core/Src/main.c"
 
 
        echo -e "\e[38;5;51;7m 提示： \e[0m固件已经拷贝完成，但该关卡可能需要额外的评测步骤。" \
