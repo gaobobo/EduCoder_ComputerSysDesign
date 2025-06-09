@@ -6,11 +6,11 @@ force_pass() {
 
 normal_pass() {
        source /tmp/download.sh \
-       "resource/STM32LED/.pio/build/genericSTM32F103RB/firmware.bin" \
-       firmware.bin \
+       "resource/STM32LED/.pio/build/genericSTM32F103RB/firmware.elf" \
+       firmware.elf \
        ${DownloadSite} \
        ${Branch} \
-       "/opt/workspace/stm32f103rbt6-fw_led/.pio/build/genericSTM32F103RB/firmware.bin"
+       "/opt/workspace/stm32f103rbt6-fw_led/.pio/build/genericSTM32Fs103RB/firmware.elf"
 
        source /tmp/download.sh \
        "resource/STM32LED/Core/Src/main.c" \
