@@ -10,7 +10,7 @@ normal_pass() {
        firmware.elf \
        ${DownloadSite} \
        ${Branch} \
-       "/opt/workspace/stm32f103rbt6-fw_led/.pio/build/genericSTM32Fs103RB/firmware.elf"
+       "/opt/workspace/stm32f103rbt6-fw_led/.pio/build/genericSTM32F103RB/firmware.elf"
 
        source /tmp/download.sh \
        "resource/STM32LED/Core/Src/main.c" \
